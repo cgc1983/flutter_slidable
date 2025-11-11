@@ -149,6 +149,8 @@ class SlidableAction extends StatelessWidget {
     this.autoClose = _kAutoClose,
     required this.onPressed,
     this.icon,
+    this.iconSize = 16,
+    this.iconColor = Colors.white,
     this.spacing = 4,
     this.label,
     this.style,
@@ -175,6 +177,16 @@ class SlidableAction extends StatelessWidget {
 
   /// An icon to display above the [label].
   final IconData? icon;
+
+  /// The size of the [icon].
+  ///
+  /// Defaults to 16.
+  final double iconSize;
+
+  /// The color of the [icon].
+  ///
+  /// Defaults to [Colors.white].
+  final Color iconColor;
 
   /// The space between [icon] and [label] if both set.
   ///
@@ -203,7 +215,7 @@ class SlidableAction extends StatelessWidget {
     final children = <Widget>[];
 
     if (icon != null) {
-      children.add(Icon(icon));
+      children.add(Icon(icon, size: iconSize, color: iconColor));
     }
 
     if (label != null) {
