@@ -92,7 +92,8 @@ class CustomSlidableAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveForegroundColor = foregroundColor ??
+    final effectiveForegroundColor =
+        foregroundColor ??
         (ThemeData.estimateBrightnessForColor(backgroundColor) ==
                 Brightness.light
             ? Colors.black
@@ -113,15 +114,10 @@ class CustomSlidableAction extends StatelessWidget {
             ),
             iconColor: effectiveForegroundColor,
             foregroundColor: effectiveForegroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: borderRadius,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: borderRadius),
             side: BorderSide.none,
           ),
-          child: Align(
-            alignment: alignment ?? Alignment.center,
-            child: child,
-          ),
+          child: Align(alignment: alignment ?? Alignment.center, child: child),
         ),
       ),
     );
@@ -155,11 +151,12 @@ class SlidableAction extends StatelessWidget {
     this.icon,
     this.spacing = 4,
     this.label,
+    this.style,
     this.borderRadius = BorderRadius.zero,
     this.padding,
     this.alignment,
-  })  : assert(flex > 0),
-        assert(icon != null || label != null);
+  }) : assert(flex > 0),
+       assert(icon != null || label != null);
 
   /// {@macro slidable.actions.flex}
   final int flex;
@@ -187,6 +184,11 @@ class SlidableAction extends StatelessWidget {
   /// A label to display below the [icon].
   final String? label;
 
+  /// The text style for the [label].
+  ///
+  /// If null, the default text style will be used.
+  final TextStyle? style;
+
   /// Padding of the OutlinedButton
   final BorderRadius borderRadius;
 
@@ -201,37 +203,22 @@ class SlidableAction extends StatelessWidget {
     final children = <Widget>[];
 
     if (icon != null) {
-      children.add(
-        Icon(icon),
-      );
+      children.add(Icon(icon));
     }
 
     if (label != null) {
       if (children.isNotEmpty) {
-        children.add(
-          SizedBox(height: spacing),
-        );
+        children.add(SizedBox(height: spacing));
       }
 
-      children.add(
-        Text(
-          label!,
-          overflow: TextOverflow.ellipsis,
-        ),
-      );
+      children.add(Text(label!, overflow: TextOverflow.ellipsis, style: style));
     }
 
     final child = children.length == 1
         ? children.first
         : Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              ...children.map(
-                (child) => Flexible(
-                  child: child,
-                ),
-              )
-            ],
+            children: [...children.map((child) => Flexible(child: child))],
           );
 
     return CustomSlidableAction(
